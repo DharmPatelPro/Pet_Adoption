@@ -21,7 +21,7 @@ const PetSchema = new Schema({
     breed: {
         type: String,
         required: true,
-        default:"stray"
+        default: "stray"
     },
     description: {
         type: String,
@@ -44,6 +44,10 @@ const PetSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    img:
+    {
+        type: String
     }
 });
 

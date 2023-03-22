@@ -147,7 +147,7 @@ router.put('/createdonor', fetchuser, [
 
         user = await User.findByIdAndUpdate(req.user, { $set: newData }, { new: true })
         success = true;
-        res.json(success);
+        res.json({success});
 
     } catch (error) {
         console.error(error.message);
