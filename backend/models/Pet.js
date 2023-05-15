@@ -18,6 +18,10 @@ const PetSchema = new Schema({
         type: String,
         required: true
     },
+    age: {
+        type: Number,
+        required: true
+    },
     breed: {
         type: String,
         required: true,
@@ -45,7 +49,7 @@ const PetSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    img:
+    image:
     {
         type: String
     }

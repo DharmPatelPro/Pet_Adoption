@@ -48,16 +48,14 @@ router.post('/createuser', [
             password: secPassword,
             email: req.body.email,
         })
-
         //To create authentication token 
         const data = {
             user: user.id
         }
         const authenticationtoken = jwt.sign(data, SECRET_KEY)
         //res.json(user)
-
         //Send authenticationtoken 
-        let success = true;
+         success = true;
         res.json({ success, authenticationtoken })
 
     } catch (error) {
@@ -132,23 +130,18 @@ router.put('/createdonor', fetchuser, [
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
     }
-
     try {
         // Create a newData object
         const newData = {};
         newData.address = address
         newData.phone = phone
-
         let user = await User.findById(req.user)
-
         if (user.address || user.phone) {
             return res.status(401).json({ success, errors: "Not Allowed" });
         }
-
         user = await User.findByIdAndUpdate(req.user, { $set: newData }, { new: true })
         success = true;
         res.json({success});
-
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
@@ -168,9 +161,10 @@ router.put('/updateuserdetails', fetchdonor, async (req, res) => {
         if (name) { newData.name = name };
         if (address) { newData.address = address };
         if (phone) { newData.phone = phone };
-        let user = await User.findByIdAndUpdate(req.user, { $set: newData }, { new: true })
-
-        res.json({ name: user.name, email: user.email, phone: user.phone, address: user.address })
+        let user,success=false
+        user = await User.findByIdAndUpdate(req.user, { $set: newData }, { new: true })
+        success = true;
+        res.json({success})
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

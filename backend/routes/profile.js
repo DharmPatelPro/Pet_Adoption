@@ -12,19 +12,25 @@ var multer = require('multer');
 
 
 
-//save uploded image in upload filolder
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname)
-    }
-});
-var upload = multer({ storage: storage });
+// //save uploded image in upload filolder
+// var storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.originalname)
+//     }
+// });
+// var upload = multer({ storage: storage });
 
 
 
+
+router.get('/fetchProfileDetails/:id', async (req, res) => {
+    const profile = await Pet.findById(req.params.id).populate("contact", ["name", "email", "phone", "address"])
+    
+    res.json(profile)
+})
 
 
 
@@ -33,24 +39,27 @@ router.get('/fetchall', async (req, res) => {
     res.json(profiles)
 })
 
+
 // ROUTE 1: fetch all pet profiles of user using: GET "/api/profile/addpet". login required
-router.get('/fetchallprofiles', fetchdonor, async (req, res) => {
+router.post('/fetchallprofiles', fetchdonor, async (req, res) => {
     const profiles = await Pet.find({ user: req.user }).populate("contact", ["name", "email", "phone", "address"])
     res.json(profiles)
 })
 
 
+
 // ROUTE 2: create new pet profile using: POST "/api/profile/addpet". login required
-router.post('/addpet', fetcdonor, upload.single('image'), [
+router.post('/addpet', fetcdonor, [
     body('name', 'Name cannot be blank').exists(),
     body('gender', 'Gendre cannot be blank').exists(),
     body('tag', 'Tag cannot be blank').exists(),
+    body('age', 'Age cannot be blank').exists(),
     body('city', 'City cannot be blank').exists(),
     body('state', 'Title cannot be blank').exists(),
     body('description', 'Decription must be atlist 5 characters').isLength({ min: 5 })
 ], async (req, res) => {
     let success = false;
-    const { name, gender, description, tag, breed, city, state } = req.body;
+    const { name, gender, description, tag, age, breed, city, state, image } = req.body;
     try {
         // If there are errors, return Bad request and the errors
         const errors = validationResult(req);
@@ -59,19 +68,18 @@ router.post('/addpet', fetcdonor, upload.single('image'), [
         }
 
         //save new pet profile
-        const str = await imageToBase64("uploads/" + req.file.filename)
-            
+        // const str = await imageToBase64("uploads/" + req.file.filename)
+        //upload.single('image'),
+
         const pet = new Pet({
-            name, description, gender, tag, breed, location: { city, state }, user: req.user, contact: req.user,
-            img: str ,               
+            name, description, gender, tag, age, breed, location: { city, state }, user: req.user, contact: req.user,
+            image: image
         })
-        
 
-
-        const savedProfile = await pet.save().then(fs.unlinkSync("uploads/" + req.file.filename))
+        const savedProfile = await pet.save() //.then(fs.unlinkSync("uploads/" + req.file.filename))
 
         success = true
-        res.json({ success, savedProfile })
+        res.json({ success })
 
     } catch (error) {
         console.error(error.message);
@@ -83,7 +91,8 @@ router.post('/addpet', fetcdonor, upload.single('image'), [
 
 // ROUTE 3: Update an existing Note using: POST "/api/notes/updateprofile/:id". Login required
 router.put('/updateprofile/:id', fetcdonor, async (req, res) => {
-    const { name, gender, description, tag, breed, city, state } = req.body;
+    let success = false;
+    const { name, gender, description, tag, age, breed, city, state, image } = req.body;
     try {
         // Find the profile to be updated and update it
         let profile = await Pet.findById(req.params.id);
@@ -95,14 +104,18 @@ router.put('/updateprofile/:id', fetcdonor, async (req, res) => {
         if (name) { newProfile.name = name };
         if (gender) { newProfile.gender = gender };
         if (tag) { newProfile.tag = tag };
+        if (age) { newProfile.age = age };
         if (breed) { newProfile.breed = breed };
         if (city) { newProfile.location.city = city } else { newProfile.location.city = profile.location.city };
         if (state) { newProfile.location.state = state } else { newProfile.location.state = profile.location.state };
         if (description) { newProfile.description = description };
+        if (image) { newProfile.image = image };
 
         profile = await Pet.findByIdAndUpdate(req.params.id, { $set: newProfile }, { new: true })
 
-        res.json({ profile });
+        success = true
+        res.json({ success });
+
 
     } catch (error) {
         console.error(error.message);
