@@ -4,25 +4,6 @@ var fetcdonor = require('../middleware/fetchdonor');
 const { body, validationResult } = require('express-validator');
 const Pet = require('../models/Pet');
 const fetchdonor = require('../middleware/fetchdonor');
-const imageToBase64 = require('image-to-base64');
-var fs = require('fs');
-var multer = require('multer');
-
-
-
-
-
-// //save uploded image in upload filolder
-// var storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname)
-//     }
-// });
-// var upload = multer({ storage: storage });
-
 
 
 
@@ -67,17 +48,14 @@ router.post('/addpet', fetcdonor, [
             return res.status(400).json({ success, errors: errors.array() })
         }
 
-        //save new pet profile
-        // const str = await imageToBase64("uploads/" + req.file.filename)
-        //upload.single('image'),
+       
 
         const pet = new Pet({
             name, description, gender, tag, age, breed, location: { city, state }, user: req.user, contact: req.user,
             image: image
         })
 
-        const savedProfile = await pet.save() //.then(fs.unlinkSync("uploads/" + req.file.filename))
-
+        const savedProfile = await pet.save() 
         success = true
         res.json({ success })
 

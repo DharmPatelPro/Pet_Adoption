@@ -5,7 +5,26 @@ const ProfileState = (props) => {
 
   const [Profiles, setProfiles] = useState([])
 
-  const fetchAllProfiles = async () => {
+  const [AllProfiles, setAllProfiles] = useState([])
+
+ 
+
+  const fetchAll = async () => {
+    const response = await fetch("http://localhost:5000/api/profile/fetchall", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    });
+    const result = await response.json();
+    setAllProfiles(result);
+  }
+
+
+  
+
+
+  const fetchAllUserProfiles = async () => {
     const response = await fetch("http://localhost:5000/api/profile/fetchallprofiles", {
       method: "POST",
       headers: {
@@ -17,19 +36,19 @@ const ProfileState = (props) => {
     setProfiles(result);
   }
 
-  const addProfile = async (name, tag,age, breed, gender, description, city, state, image) => {
-    console.log(name, tag,age, breed, gender, description, city, state)
+  const addProfile = async (name, tag, age, breed, gender, description, city, state, image) => {
+    console.log(name, tag, age, breed, gender, description, city, state)
     const response = await fetch(`http://localhost:5000/api/profile/addpet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({ name, tag,age, breed, gender, description, city, state, image })
+      body: JSON.stringify({ name, tag, age, breed, gender, description, city, state, image })
     });
     const result = await response.json();
     console.log(result)
-    fetchAllProfiles()
+    fetchAllUserProfiles()
   }
 
   const deleteProfile = async (id) => {
@@ -43,25 +62,26 @@ const ProfileState = (props) => {
     });
     const result = response.json();
     console.log(result)
-    fetchAllProfiles()
+    fetchAllUserProfiles()
   }
 
-  const updateProfile = async (id,name, tag,age, breed, gender, description, city, state, image) =>{
-    console.log(id,name, tag,age, breed, gender, description, city, state)
+  const updateProfile = async (id, name, tag, age, breed, gender, description, city, state, image) => {
+    console.log(id, name, tag, age, breed, gender, description, city, state)
     const response = await fetch(`http://localhost:5000/api/profile/updateprofile/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({ name, tag,age, breed, gender, description, city, state, image })
+      body: JSON.stringify({ name, tag, age, breed, gender, description, city, state, image })
     });
     const result = await response.json();
-    fetchAllProfiles()
+    if(result.success === true){alert("Edit Success");}
+    fetchAllUserProfiles()
   }
 
   return (
-    <ProfileContext.Provider value={{ Profiles, fetchAllProfiles, addProfile,deleteProfile,updateProfile }}>
+    <ProfileContext.Provider value={{ Profiles, AllProfiles, fetchAll, fetchAllUserProfiles, addProfile, deleteProfile, updateProfile }}>
       {props.children}
     </ProfileContext.Provider>
   )

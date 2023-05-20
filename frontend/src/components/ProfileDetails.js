@@ -45,9 +45,9 @@ function ProfileDetails() {
                 </span>
               </div>
               <p class="text-gray-900 font-medium leading-relaxed">{Profile.breed} {Profile.tag}</p>
-              <p class="text-gray-900 font-medium leading-relaxed">Oner Name : {Profile.onername}</p>
-              <p class="text-gray-900 font-medium leading-relaxed">Oner Email Id : {Profile.oneremail}</p>
-              <p class="text-gray-900 font-medium leading-relaxed">Oner Phone Number : {Profile.onerphone}</p>
+              <p class="text-gray-900 font-medium leading-relaxed">Owner Name : {Profile.onername}</p>
+              <p class="text-gray-900 font-medium leading-relaxed">Owner Email Id : {Profile.oneremail}</p>
+              <p class="text-gray-900 font-medium leading-relaxed">Owner Phone Number : {Profile.onerphone}</p>
 
               <div class="flex rounded-lg p-2 flex-col">
                 <div class="flex items-center ">
@@ -66,7 +66,7 @@ function ProfileDetails() {
                 {Profile.city} , {Profile.state}
               </div>
               <div class="flex">
-                <a href={`tel:${Profile.phone}`} class="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-3 focus:outline-none hover:bg-indigo-600 rounded shadow-md shadow-gray-600"><svg class="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />  <path d="M15 7a2 2 0 0 1 2 2" />  <path d="M15 3a6 6 0 0 1 6 6" /></svg> Call Now</a>
+                <a href={`tel:${Profile.onerphone}`} class="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-3 focus:outline-none hover:bg-indigo-600 rounded shadow-md shadow-gray-600"><svg class="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />  <path d="M15 7a2 2 0 0 1 2 2" />  <path d="M15 3a6 6 0 0 1 6 6" /></svg> Call Now</a>
               </div>
             </div>
           </div>

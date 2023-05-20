@@ -5,10 +5,10 @@ import profileContext from '../context/profiles/profileContext';
 
 function Profiles() {
   const context = useContext(profileContext);
-  const { Profiles, fetchAllProfiles, deleteProfile } = context;
-
+  const { Profiles, fetchAllUserProfiles, deleteProfile } = context;
+ 
   useEffect(() => {
-    fetchAllProfiles();
+    fetchAllUserProfiles();
     // eslint-disable-next-line
   }, [])
 
@@ -22,6 +22,7 @@ function Profiles() {
           {Profiles.map((profile) => {
             return <div key={profile._id}>
               <div class="lg:w-4/5 mx-auto flex flex-wrap p-3 rounded-xl bg-gray-100">
+                
                 <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto  object-cover object-center rounded-2xl" src={profile.image} />
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                   <h2 class="text-xl title-font text-red-700 tracking-widest">{profile.tag}</h2>

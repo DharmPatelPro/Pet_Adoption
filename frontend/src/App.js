@@ -9,6 +9,7 @@ import ProfileState from './context/profiles/ProfileState';
 import ProfileForm from './components/ProfileForm';
 import Signup from './components/Signup';
 import ProfileDetails from './components/ProfileDetails'
+import Aboutus from './components/Aboutus';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route exact path='/login' element={<Login />} />
               <Route exact path='/dashboard' element={<Dashboard />} />
               <Route exact path='/ProfileForm' element={<ProfileForm />} />
+              <Route exact path='/aboutus' element={<Aboutus />} />
               <Route exact path='/signup' element={<Signup />} />
               <Route path="/:_id" element={<ProfileDetails />} />
               <Route path="/ProfileForm/:_id" element={<ProfileForm />} />

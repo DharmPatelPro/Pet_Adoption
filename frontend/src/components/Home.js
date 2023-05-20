@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useContext, useState } from 'react';
 import { Link } from "react-router-dom";
+import profileContext from '../context/profiles/profileContext';
 
 function Home() {
 
-
-
-  const [Profiles, setProfiles] = useState([])
-
-  const fetchAll = async () => {
-    const response = await fetch("http://localhost:5000/api/profile/fetchall", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-    });
-    const result = await response.json();
-    setProfiles(result);
-  }
+  const context = useContext(profileContext);
+  const { AllProfiles, fetchAll } = context;
+  
+  
 
   useEffect(() => {
     fetchAll();
+    
     // eslint-disable-next-line
   }, [])
 
@@ -28,8 +20,9 @@ function Home() {
 
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-20 mx-auto">
+
           <div class="flex flex-wrap ">
-            {Profiles.map((profile) => {
+            {AllProfiles.map((profile) => {
               return <div key={profile._id} class="xl:w-1/4 md:w-1/2 p-4s my-5">
                 <Link to={`/${profile._id}`}>
                   <div class="bg-gray-100 p-6 rounded-lg mx-3 border-2  shadow-xl border-gray-400 shadow-gray-600 ">

@@ -22,7 +22,7 @@ const Login = (props) => {
             // Save the auth token and redirect
             localStorage.setItem('token', json.authenticationtoken);
             navigate('/')
-
+            window.location.reload()
         }
         else {
             alert("Invalid credentials");
