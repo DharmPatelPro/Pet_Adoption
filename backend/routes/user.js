@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
 const fetchdonor = require('../middleware/fetchdonor');
-
 const SECRET_KEY = 'DharmProject';
 
 
@@ -65,8 +64,6 @@ router.post('/createuser', [
 })
 
 
-
-
 // ROUTE 3: Authenticate(Login) a User using: POST "/api/user/login". No login required
 router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),
@@ -114,10 +111,7 @@ router.post('/login', [
 })
 
 
-
-
 // ROUTE 4: create donor using: POST "/api/user/createdonor". login required
-
 router.put('/createdonor', fetchuser, [
     body('address', 'Address cannot be blank').exists(),
     body('phone', 'Enter valid phone number').isLength({ min: 8 })
@@ -149,10 +143,7 @@ router.put('/createdonor', fetchuser, [
 })
 
 
-
-
 // ROUTE 5: update user details using : POST "/api/user/updateuserdetails". login required
-
 router.put('/updateuserdetails', fetchdonor, async (req, res) => {
     const { name, address, phone } = req.body;
     try {

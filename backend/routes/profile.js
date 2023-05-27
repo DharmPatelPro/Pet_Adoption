@@ -6,30 +6,28 @@ const Pet = require('../models/Pet');
 const fetchdonor = require('../middleware/fetchdonor');
 
 
-
+//ROUTE 1: fetch rofile Details using: GET "/api/profile/addpet". login required
 router.get('/fetchProfileDetails/:id', async (req, res) => {
     const profile = await Pet.findById(req.params.id).populate("contact", ["name", "email", "phone", "address"])
     
     res.json(profile)
 })
 
-
-
+// ROUTE 2: fetch all pet profiles using: GET "/api/profile/addpet". login required
 router.get('/fetchall', async (req, res) => {
     const profiles = await Pet.find().populate("contact", ["name", "email", "phone", "address"])
     res.json(profiles)
 })
 
 
-// ROUTE 1: fetch all pet profiles of user using: GET "/api/profile/addpet". login required
+// ROUTE 3: fetch all pet profiles of user using: GET "/api/profile/addpet". login required
 router.post('/fetchallprofiles', fetchdonor, async (req, res) => {
     const profiles = await Pet.find({ user: req.user }).populate("contact", ["name", "email", "phone", "address"])
     res.json(profiles)
 })
 
 
-
-// ROUTE 2: create new pet profile using: POST "/api/profile/addpet". login required
+// ROUTE 4: create new pet profile using: POST "/api/profile/addpet". login required
 router.post('/addpet', fetcdonor, [
     body('name', 'Name cannot be blank').exists(),
     body('gender', 'Gendre cannot be blank').exists(),
@@ -47,9 +45,7 @@ router.post('/addpet', fetcdonor, [
         if (!errors.isEmpty()) {
             return res.status(400).json({ success, errors: errors.array() })
         }
-
-       
-
+     
         const pet = new Pet({
             name, description, gender, tag, age, breed, location: { city, state }, user: req.user, contact: req.user,
             image: image
@@ -67,7 +63,7 @@ router.post('/addpet', fetcdonor, [
 
 
 
-// ROUTE 3: Update an existing Note using: POST "/api/notes/updateprofile/:id". Login required
+// ROUTE 5: Update an existing Note using: POST "/api/notes/updateprofile/:id". Login required
 router.put('/updateprofile/:id', fetcdonor, async (req, res) => {
     let success = false;
     const { name, gender, description, tag, age, breed, city, state, image } = req.body;
@@ -102,7 +98,7 @@ router.put('/updateprofile/:id', fetcdonor, async (req, res) => {
 })
 
 
-// ROUTE 4: Delete an existing Note using: DELETE "/api/notes//deleteprofile/:id". Login required
+// ROUTE 6: Delete an existing Note using: DELETE "/api/notes//deleteprofile/:id". Login required
 router.delete('/deleteprofile/:id', fetchdonor, async (req, res) => {
     let success = false;
     try {
