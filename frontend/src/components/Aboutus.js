@@ -4,7 +4,7 @@ function Aboutus() {
     return (
         <>
             <section class="text-gray-600 body-font">
-                <div class="container flex flex-wrap px-5 py-24 mx-auto items-center">
+                <div class="container flex flex-wrap px-5 py-10 mx-auto items-center">
                     <div class="md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pb-10 border-b border-gray-200">
                         <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">About us</h1>
                         <p class="leading-relaxed text-base">Welcome to our pet adoption website! We are passionate about finding loving homes for animals in need and connecting them with caring individuals and families. </p><br/>
@@ -17,8 +17,6 @@ function Aboutus() {
                             <li class="lg:w-full mb-1 w-full">
                                 <a class="text-gray-600 hover:text-gray-800">Dharm Patel (206400307030)</a>
                             </li>
-                           
-                          
                             <li class="lg:w-full mb-1 w-full">
                                 <a class="text-gray-600 hover:text-gray-800">Devanshu Jadav(206400307044)</a>
                             </li>
